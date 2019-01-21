@@ -1,40 +1,40 @@
 import React from "react";
-import "./PasswordStrengthMeter.css";
+import ProgressBar from "./ProgressBar";
 import zxcvbn from "zxcvbn";
 
-function createPasswordLabel(result) {
+import "./PasswordStrengthMeter.css";
+
+function getPasswordStrength(result) {
   switch (result.score) {
     case 0:
-      return "Weak";
+      return { text: "Weak", color: "red", percentage: "0" };
     case 1:
-      return "Weak";
+      return { text: "Weak", color: "red", percentage: "25" };
     case 2:
-      return "Fair";
+      return { text: "Fair", color: "yellow", percentage: "50" };
     case 3:
-      return "Good";
+      return { text: "Good", color: "green", percentage: "75" };
     case 4:
-      return "Strong";
+      return { text: "Strong", color: "blue", percentage: "100" };
     default:
-      return "Weak";
+      return { text: "Weak", color: "red", percentage: "0" };
   }
 }
 
 function PasswordStrengthMeter({ password }) {
-  const testedResult = zxcvbn(password);
-  const passwordStrength = createPasswordLabel(testedResult);
+  const passwordStrength = getPasswordStrength(zxcvbn(password));
 
   return (
     <div className="password-strength-meter">
-      <progress
-        className={`password-strength-meter-progress strength-${passwordStrength}`}
-        value={testedResult.score}
-        max="4"
+      <ProgressBar
+        percentage={passwordStrength.percentage}
+        color={passwordStrength.color}
       />
       <br />
       <label className="password-strength-meter-label">
         {password && (
           <>
-            <strong>Password strength:</strong> {passwordStrength}
+            <strong>Password strength:</strong> {passwordStrength.text}
           </>
         )}
       </label>
