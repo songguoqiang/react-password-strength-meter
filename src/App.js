@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import "./PasswordStrengthMeter";
+import PasswordStrengthMeter from "./component/PasswordStrengthMeter";
+
 import "./App.css";
-import PasswordStrengthMeter from "./PasswordStrengthMeter";
 
 class App extends Component {
   state = {
